@@ -245,9 +245,17 @@
     border-radius: 24px; overflow: hidden; background: var(--wheat);
     box-shadow: 0 20px 60px rgba(61,43,31,0.15);
   }
-  .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 0.6s ease; display: flex; align-items: center; justify-content: center; }
+  /* Ken Burns keyframes – 4 variantes de zoom+pan */
+  @keyframes kb0 { from{transform:scale(1)    translate(0%,0%)}     to{transform:scale(1.14) translate(-2%,-1.5%)} }
+  @keyframes kb1 { from{transform:scale(1.12) translate(-2%,1.5%)}  to{transform:scale(1)    translate(2%,-1%)} }
+  @keyframes kb2 { from{transform:scale(1)    translate(2%,1%)}     to{transform:scale(1.13) translate(-1%,-2%)} }
+  @keyframes kb3 { from{transform:scale(1.1)  translate(1.5%,-1%)}  to{transform:scale(1)    translate(-2%,2%)} }
+  @keyframes kb-masa  { from{transform:scale(1.1) translate(0%,0%)} to{transform:scale(1) translate(0%,0%)} }
+  @keyframes kb-ferme { from{transform:scale(1.14) translate(0%,0%)} to{transform:scale(1) translate(0%,0%)} }
+
+  .slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease; display: flex; align-items: center; justify-content: center; }
   .slide.active { opacity: 1; }
-  .slide img { width: 100%; height: 100%; object-fit: cover; }
+  .slide img { width: 100%; height: 100%; object-fit: cover; transform-origin: center center; will-change: transform; }
   .slide-placeholder { width:100%; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:1rem; background:var(--wheat); }
   .ph-icon { font-size: 5rem; opacity: 0.45; }
   .ph-label { font-family:"Playfair Display",serif; font-size:1.4rem; color:var(--brown-mid); opacity:0.6; }
@@ -375,8 +383,8 @@
   <div class="nav-logo">Rico <span>Pan</span></div>
   <ul class="nav-links">
     <li><a href="#productos">Nuestro pan</a></li>
-    <li><a href="#faq">Preguntas frecuentes</a></li>
     <li><a href="#galeria">Galería</a></li>
+    <li><a href="#faq">Preguntas frecuentes</a></li>
   </ul>
 </nav>
 
@@ -471,50 +479,6 @@
 </section>
 
 
-<!-- FAQ -->
-<section class="faq" id="faq">
-  <div class="container">
-    <div class="faq-intro">
-      <div class="section-label">¿Tienes dudas?</div>
-      <h2 class="section-title">Preguntas frecuentes</h2>
-      <p>Todo lo que quieres saber sobre nuestro pan antes de hacer tu pedido.</p>
-    </div>
-    <div class="faq-list">
-
-      <div class="faq-item">
-        <button class="faq-btn" onclick="toggleFaq(this)">
-          <span class="faq-question">¿Qué es la masa madre?</span>
-          <span class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
-        </button>
-        <div class="faq-body">
-          <p>La masa madre es un fermento natural hecho solo con harina y agua. Le da al pan una corteza crujiente, una miga esponjosa y un sabor ligeramente ácido muy característico. Además es mucho más fácil de digerir que el pan con levadura comercial.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-btn" onclick="toggleFaq(this)">
-          <span class="faq-question">¿Cuánto dura el pan?</span>
-          <span class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
-        </button>
-        <div class="faq-body">
-          <p>El pan dulce y de barra se conserva fresco 2–3 días a temperatura ambiente. El pan de masa madre dura hasta 5–7 días gracias a su fermentación natural, que actúa como conservador. Para mayor duración puedes guardarlo en bolsa hermética o congelarlo.</p>
-        </div>
-      </div>
-
-      <div class="faq-item">
-        <button class="faq-btn" onclick="toggleFaq(this)">
-          <span class="faq-question">¿Cuál es la mejor forma de conservarlo?</span>
-          <span class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
-        </button>
-        <div class="faq-body">
-          <p>Lo ideal es guardarlo envuelto en un trapo de tela o dentro de una bolsa de papel, a temperatura ambiente y en un lugar fresco y seco. Evita el refrigerador ya que reseca el pan. Si no lo vas a comer pronto, lo puedes congelar en rebanadas.</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
 <!-- GALERIA -->
 <section class="galeria-section" id="galeria">
   <div class="container">
@@ -570,6 +534,14 @@
           <img src="semitas.PNG" alt="Semitas" style="width:100%;height:100%;object-fit:cover;">
           <div class="slide-caption"><h4>Semitas</h4><p>Sabor de tradición</p></div>
         </div>
+        <div class="slide" data-index="11">
+          <img src="masa.PNG" alt="Preparando la masa" style="width:100%;height:100%;object-fit:cover;">
+          <div class="slide-caption"><h4>La masa</h4><p>Donde todo empieza</p></div>
+        </div>
+        <div class="slide" data-index="12">
+          <img src="ferme.PNG" alt="Fermentación" style="width:100%;height:100%;object-fit:cover;">
+          <div class="slide-caption"><h4>Fermentación</h4><p>El tiempo es el ingrediente secreto</p></div>
+        </div>
         <button class="slide-btn prev" onclick="move(-1)" aria-label="Anterior">
           <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
         </button>
@@ -579,7 +551,7 @@
       </div>
 
       <div class="slide-dots" id="dots"></div>
-      <div class="slide-counter" id="counter">1 / 11</div>
+      <div class="slide-counter" id="counter">1 / 13</div>
 
       <div class="thumbs-strip" id="thumbs">
         <div class="thumb active" onclick="goTo(0)" style="padding:0;"><img src="IMG_6702.JPG" alt="Panadería Rico Pan" style="width:100%;height:100%;object-fit:cover;"></div>
@@ -593,7 +565,54 @@
         <div class="thumb" onclick="goTo(8)" style="padding:0;"><img src="pan%20masa%20madre1.PNG" alt="Pan de Masa Madre" style="width:100%;height:100%;object-fit:cover;"></div>
         <div class="thumb" onclick="goTo(9)" style="padding:0;"><img src="piedra.PNG" alt="Horno de Piedra" style="width:100%;height:100%;object-fit:cover;"></div>
         <div class="thumb" onclick="goTo(10)" style="padding:0;"><img src="semitas.PNG" alt="Semitas" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="thumb" onclick="goTo(11)" style="padding:0;"><img src="masa.PNG" alt="La masa" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="thumb" onclick="goTo(12)" style="padding:0;"><img src="ferme.PNG" alt="Fermentación" style="width:100%;height:100%;object-fit:cover;"></div>
       </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FAQ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="faq-intro">
+      <div class="section-label">¿Tienes dudas?</div>
+      <h2 class="section-title">Preguntas frecuentes</h2>
+      <p>Todo lo que quieres saber sobre nuestro pan antes de hacer tu pedido.</p>
+    </div>
+    <div class="faq-list">
+
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span class="faq-question">¿Qué es la masa madre?</span>
+          <span class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-body">
+          <p>La masa madre es un fermento natural hecho solo con harina y agua. Le da al pan una corteza crujiente, una miga esponjosa y un sabor ligeramente ácido muy característico. Además es mucho más fácil de digerir que el pan con levadura comercial.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span class="faq-question">¿Cuánto dura el pan?</span>
+          <span class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-body">
+          <p>El pan dulce y de barra se conserva fresco 2–3 días a temperatura ambiente. El pan de masa madre dura hasta 5–7 días gracias a su fermentación natural, que actúa como conservador. Para mayor duración puedes guardarlo en bolsa hermética o congelarlo.</p>
+        </div>
+      </div>
+
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          <span class="faq-question">¿Cuál es la mejor forma de conservarlo?</span>
+          <span class="faq-icon"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></span>
+        </button>
+        <div class="faq-body">
+          <p>Lo ideal es guardarlo envuelto en un trapo de tela o dentro de una bolsa de papel, a temperatura ambiente y en un lugar fresco y seco. Evita el refrigerador ya que reseca el pan. Si no lo vas a comer pronto, lo puedes congelar en rebanadas.</p>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -621,14 +640,44 @@
   const dotsEl = document.getElementById('dots');
   const counter = document.getElementById('counter');
   let current = 0, timer;
+  const kbAnims = ['kb0','kb1','kb2','kb3'];
+
   slides.forEach((_,i)=>{ const d=document.createElement('div'); d.className='dot'+(i===0?' active':''); d.onclick=()=>goTo(i); dotsEl.appendChild(d); });
-  function goTo(n){ slides[current].classList.remove('active'); thumbs[current].classList.remove('active'); dotsEl.children[current].classList.remove('active'); current=(n+slides.length)%slides.length; slides[current].classList.add('active'); thumbs[current].classList.add('active'); dotsEl.children[current].classList.add('active'); counter.textContent=(current+1)+' / '+slides.length; resetTimer(); }
-  function move(dir){ goTo(current+dir); }
-  function resetTimer(){ clearInterval(timer); timer=setInterval(()=>move(1),4000); }
-  document.addEventListener('keydown',e=>{ if(e.key==='ArrowLeft')move(-1); if(e.key==='ArrowRight')move(1); });
-  const sm=document.getElementById('slidemain'); let tx=0;
-  sm.addEventListener('touchstart',e=>tx=e.touches[0].clientX);
-  sm.addEventListener('touchend',e=>{ const diff=tx-e.changedTouches[0].clientX; if(Math.abs(diff)>40)move(diff>0?1:-1); });
+
+  function startKB(slideEl, idx) {
+    const img = slideEl.querySelector('img');
+    if (!img) return;
+    img.style.animation = 'none';
+    void img.offsetWidth;
+    let anim;
+    if      (idx === 11) anim = 'kb-masa 3.5s ease-in-out forwards';
+    else if (idx === 12) anim = 'kb-ferme 7s ease-in-out forwards';
+    else                 anim = kbAnims[idx % 4] + ' 7s ease-in-out forwards';
+    img.style.animation = anim;
+  }
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    thumbs[current].classList.remove('active');
+    dotsEl.children[current].classList.remove('active');
+    current = (n + slides.length) % slides.length;
+    slides[current].classList.add('active');
+    thumbs[current].classList.add('active');
+    dotsEl.children[current].classList.add('active');
+    counter.textContent = (current + 1) + ' / ' + slides.length;
+    startKB(slides[current], current);
+    resetTimer();
+  }
+
+  function move(dir) { goTo(current + dir); }
+  function resetTimer() { clearInterval(timer); timer = setInterval(() => move(1), 6000); }
+
+  document.addEventListener('keydown', e => { if(e.key==='ArrowLeft') move(-1); if(e.key==='ArrowRight') move(1); });
+  const sm = document.getElementById('slidemain'); let tx = 0;
+  sm.addEventListener('touchstart', e => tx = e.touches[0].clientX);
+  sm.addEventListener('touchend', e => { const diff = tx - e.changedTouches[0].clientX; if(Math.abs(diff) > 40) move(diff > 0 ? 1 : -1); });
+
+  startKB(slides[0], 0);
   resetTimer();
 </script>
 </body>
